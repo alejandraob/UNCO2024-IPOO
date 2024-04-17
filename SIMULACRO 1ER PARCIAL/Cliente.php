@@ -64,6 +64,10 @@ class Cliente{
 
     /*Creamos el metodo toString de la clase*/
     public function __toString(){
-        return "Nombre: ".$this->nombre." Apellido: ".$this->apellido." Estado: ".$this->estado." Tipo de Documento: ".$this->tipoDocumento." Numero de Documento: ".$this->numeroDocumento;
+        return "Cliente: \n Nombre:" . $this->getNombre() 
+        . "\n Apellido: ". $this->getApellido() 
+        . "\n Estado: " . ($this->getEstado()? "SI" : "NO") 
+        . "\n Tipo DNI:" . $this->getTipoDocumento() 
+        . "\n Nro DNI ". $this->getNumeroDocumento();
     }
 }

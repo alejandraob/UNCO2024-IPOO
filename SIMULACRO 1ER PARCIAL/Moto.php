@@ -62,21 +62,27 @@ class Moto{
      * $venta=$compra+$compra*(annio*incremento_anual)
      * donde $compra es el costo de la moto, anio es cantidad de años transcurridos desde que se fabrico la moto y 
      * por_inc_anual es porcentaje de incremento anual de la moto
-     * @return float
+     *
      */
     public function darPrecioVenta(){
-        $venta=0;
-        
-        if($this->activa == false){
-            return $venta;
-        }else{
-            $venta=$this->costo+$this->costo*($this->anio_fabricacion*$this->porcentaje_incremento_anual);
-            return $venta;
+        $anioActual = date("Y");
+        $retorno = -1;
+        $costo = $this->getCosto();
+        $cantAniosVehiculo = $anioActual - $this->getAnioFabricacion() ;
+        if($this->getActiva()){
+            $retorno = $costo + $costo*($cantAniosVehiculo*$this->getPorcentajeIncrementoAnual());
         }
+        return $retorno;
     }
     //crearemos el metodo toString de la clase
     public function __toString(){
-        return "Codigo: ".$this->codigo." Costo: ".$this->costo." Año de Fabricacion: ".$this->anio_fabricacion." Descripcion: ".$this->descripcion." Porcentaje de Incremento Anual: ".$this->porcentaje_incremento_anual." Activa: ".$this->activa;
+        return "Moto: \n
+         Codigo:". $this->getCodigo() .
+        "\nCosto: " . $this->getCosto() .
+         "\nanioFabric: " . $this->getAnioFabricacion().
+         "\nDescripcion:" . $this->getDescripcion().
+         "\nPorcIncrementoAnual: " . $this->getPorcentajeIncrementoAnual().
+         "\n Activo: " . ($this->getActiva()? "SI" : "NO");
     }
 
 }

@@ -6,12 +6,15 @@ class Venta{
     private $moto;
     private $precioFinal;
 
-    public function __construct($numero, $fecha, $cliente, $moto, $precioFinal){
-        $this->numero = $numero;
+    public function __construct($fecha, $cliente, $moto){
+        $this->numero = $this->generarNumero();
         $this->fecha = $fecha;
         $this->cliente = $cliente;
         $this->moto = $moto;
-        $this->precioFinal = $precioFinal;
+        $this->precioFinal = 0;
+    }
+    private function generarNumero(){
+        return rand(1,1000);
     }
 
     public function getNumero(){
@@ -45,6 +48,20 @@ class Venta{
         $this->precioFinal = $precioFinal;
     }
 
+
+    public function mostrarArrMotos(){
+        $mensaje = "";
+        $moto = $this->getMoto();
+        for($i=0; $i<count($moto);$i++){
+            $mensaje.= "\n" . $moto[$i] . "\n";
+        }
+        return $mensaje;
+    }
+
+
+
+
+
     /**
      * Incorporar meto incorporarMoto($objMoto) que recibe un objeto de tipo Moto y lo incorpora a la coleccion de la venta, SIEMPRE Y CUANDO SEA POSIBLE LA VENTA. El metodo 
      * casa vez que incopora una moto a la venta, debe actualizar la variable instancia precio final de la vent. Utilizar el metodo que calcula el precio de venta de la moto.
@@ -53,9 +70,33 @@ class Venta{
      * 
      */
     public function incorporarMoto($objMoto){
+        $arrMotos = $this->getMoto();
+        $precioFinal =  $this->getPrecioFinal();
+        $retorno = false;
+
         if($objMoto->getActiva() == true){
-            $this->moto = $objMoto;
-            $this->precioFinal = $this->moto->darPrecioVenta();
+           //Agrego al arreglo de moto el obj moto
+           array_push($arrMotos,$objMoto);
+           //Seteo el nuevo arreglo de moto
+           $this->setMoto($arrMotos);
+           //Sumo al precio final el moto agregado
+           $precioFinal+=$objMoto->darPrecioVenta();
+           $this->setPrecioFinal($precioFinal);
+           $retorno = true;
         }
+        return $retorno;
     }
+
+
+    public function __toString(){
+        return "Venta: \n Numero:" . $this->getNumero() 
+        . "\n Fecha: ". $this->getFecha() 
+        . "\n Cliente: ". $this->getCliente() 
+        . "\n Motos: ". $this->mostrarArrMotos() 
+        . "\n Precio Final: ". $this->getPrecioFinal() . "\n";
+    }
+
+
+
+
 }
